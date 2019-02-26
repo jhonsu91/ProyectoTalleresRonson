@@ -11,7 +11,7 @@ package ec.edu.ister.modelo;
  */
 public class Pieza {
 
-    private int codigoPieza;
+    private String codigoPieza;
     private String nombrePieza;
     private String modeloPieza;
     private String colorPieza;
@@ -22,14 +22,14 @@ public class Pieza {
     /**
      * @return the codigoPieza
      */
-    public int getCodigoPieza() {
+    public String getCodigoPieza() {
         return codigoPieza;
     }
 
     /**
      * @param codigoPieza the codigoPieza to set
      */
-    public void setCodigoPieza(int codigoPieza) {
+    public void setCodigoPieza(String codigoPieza) {
         this.codigoPieza = codigoPieza;
     }
 
