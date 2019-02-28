@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ec.edu.ister.controlador;
+package ec.edu.ister.modelo;
 
 import ec.edu.ister.modelo.Pieza;
 import java.sql.Connection;
@@ -64,7 +64,7 @@ public class Piezas extends Conexion {
         }
         return 0;
     }
-    public int modificarPolitico(String codigoPieza, String nombrePieza, String modeloPieza, String colorPieza, double costoPieza, int cantidadPieza, String descripcionPieza) {
+    public int setModifica(String codigoPieza, String nombrePieza, String modeloPieza, String colorPieza, double costoPieza, int cantidadPieza, String descripcionPieza) {
         ResultSet resultSet = null;
         Connection conexion = getConexion();
         PreparedStatement preparedStatement = null;
@@ -86,13 +86,13 @@ public class Piezas extends Conexion {
             }
         }
     }
-    public int EliminarPolitico(String codigoPieza) {
+    public int setElimina(String codigoPieza) {
         ResultSet resultSet = null;
         Connection conexion = getConexion();
         PreparedStatement preparedStatement = null;
         
         String delete = "DELETE FROM piezas WHERE  codigoPieza='" + codigoPieza + "';";
-
+        
         try {
             preparedStatement = conexion.prepareStatement(delete);
             preparedStatement.executeUpdate();

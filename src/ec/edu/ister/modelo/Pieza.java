@@ -15,7 +15,7 @@ public class Pieza {
     private String nombrePieza;
     private String modeloPieza;
     private String colorPieza;
-    private Double costoPieza;
+    private double costoPieza;
     private int cantidadPieza;
     private String descripcionPieza;
 
