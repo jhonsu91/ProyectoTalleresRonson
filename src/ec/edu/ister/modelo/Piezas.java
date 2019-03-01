@@ -17,9 +17,10 @@ import javax.swing.JOptionPane;
  * @author suntaxi-chasipanta
  */
 public class Piezas extends Conexion {
+
     Pieza obPieza = new Pieza();
-    
-    public int registrarPieza(Pieza obPieza) { 
+
+    public int registrarPieza(Pieza obPieza) {
         ResultSet resultSet = null;
         Connection conexion = getConexion();
         PreparedStatement preparedStatement = null;
@@ -46,6 +47,31 @@ public class Piezas extends Conexion {
             }
         }
     }
+    
+    public int existe(String codigoPieza) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = getConexion();
+        String sql = "SELECT count(codigoPieza) FROM piezas WHERE codigoPieza = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, codigoPieza);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 1;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+            return 1;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+    }
     public int setPieza(String codigoPieza, String nombrePieza, String modeloPieza, String colorPieza, double costoPieza, int cantidadPieza, String descripcionPieza) {
         obPieza.setCodigoPieza(codigoPieza);
         obPieza.setNombrePieza(nombrePieza);
@@ -56,20 +82,21 @@ public class Piezas extends Conexion {
         obPieza.setDescripcionPieza(descripcionPieza);
 
         if (registrarPieza(obPieza) == 1) {
-            JOptionPane.showMessageDialog(null, "bine");
+            JOptionPane.showMessageDialog(null, "Los datos se ingresaron con exito");
 
         } else {
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Código ya existente");
 
         }
         return 0;
     }
+
     public int setModifica(String codigoPieza, String nombrePieza, String modeloPieza, String colorPieza, double costoPieza, int cantidadPieza, String descripcionPieza) {
         ResultSet resultSet = null;
         Connection conexion = getConexion();
         PreparedStatement preparedStatement = null;
-        
-        String update = "UPDATE piezas SET nombrePieza='" +nombrePieza + "',modeloPieza='" + modeloPieza + "',colorPieza='" + colorPieza + "',costoPieza='" + costoPieza + "',cantidadPieza='" + cantidadPieza + "',descripcionPieza='" + descripcionPieza + "' WHERE codigoPieza='" + codigoPieza + "';";
+
+        String update = "UPDATE piezas SET nombrePieza='" + nombrePieza + "',modeloPieza='" + modeloPieza + "',colorPieza='" + colorPieza + "',costoPieza='" + costoPieza + "',cantidadPieza='" + cantidadPieza + "',descripcionPieza='" + descripcionPieza + "' WHERE codigoPieza='" + codigoPieza + "';";
 
         try {
             preparedStatement = conexion.prepareStatement(update);
@@ -86,13 +113,14 @@ public class Piezas extends Conexion {
             }
         }
     }
+
     public int setElimina(String codigoPieza) {
         ResultSet resultSet = null;
         Connection conexion = getConexion();
         PreparedStatement preparedStatement = null;
-        
+
         String delete = "DELETE FROM piezas WHERE  codigoPieza='" + codigoPieza + "';";
-        
+
         try {
             preparedStatement = conexion.prepareStatement(delete);
             preparedStatement.executeUpdate();

@@ -17,15 +17,13 @@ import java.util.logging.Logger;
  */
 public class Conexion {
 
-   
     private Connection mysqlConexion = null;
-    private String ssl="?useTimezone=true&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true";
 
     public Connection getConexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            mysqlConexion = DriverManager.getConnection("jdbc:mysql://localhost/talleresronson"+this.ssl, "root", "");
-            System.out.println("Conexion exitosa a la base de Datos");
+            mysqlConexion = DriverManager.getConnection("jdbc:mysql://sql3.freemysqlhosting.net/sql3281234", "sql3281234", "ztjfp9F2D2");
+            System.out.println("En buena hora conexion exitosa a la base de datos");
         } catch (SQLException e) {
             System.err.println(e.toString());
             System.out.println("Sin acceso al servidor de base de datos");
@@ -35,6 +33,3 @@ public class Conexion {
         return mysqlConexion;
     }
 }
-
-
-
